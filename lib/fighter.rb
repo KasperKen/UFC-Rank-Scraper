@@ -1,23 +1,22 @@
 class Fighter
 
   extend Findable
+  include Tools
 
   @@all = []
 
 
-  attr_reader :name, :weightclass, :ranking, :record
+  attr_accessor :record, :bio_link
+  attr_reader :name, :weightclass
 
-  def initialize(name)
+  def initialize(name, record, bio_link)
     @name = name
-    @weightclass = []
+    @record = record
+    @bio_link = bio_link
+    self.save
   end
-
-
-  def self.all
-    WeightClass.all.detect {|weight| weight.fighters}
-  end
-
-
+  
+  
   def save
     @@all << self
   end
@@ -28,40 +27,39 @@ class Fighter
   end
 
 
-  def is_number?(number)
-    number.to_i.to_s == number
+  def rank
+    Rank.all.select {|rank| rank.fighter.name == self.name}
+  end
+
+  def display_ranks
+    rank.map {|object| ("ranked #{object.rank} in the #{object.weightclass.name} division")}
+  end
+
+  def bio_scrape
+    Scraper.all[0].get_page(@bio_link) 
   end
 
 
-  def add_weightclass(new_class)
-    @weightclass << new_class if !@weightclass.include? new_class
+  def bio_summery
+   "\n" + self.bio_scrape.css('div .content').css('p')[0].text 
   end
 
 
-  def add_ranking(ranking)
-    if ranking == 'C'
-      @ranking = 'Champion'
-    elsif is_number?(ranking)
-      @ranking = ranking
-    else
-      @ranking = 'Not Ranked'
-    end
+  def full_bio
+    self.bio_scrape.css('div .content').text.gsub(/\n/, "\n\n").gsub('(adsbygoogle = window.adsbygoogle || []).push({});', "")
   end
 
 
-  def add_attributes(fighter_data)
-    weightclass = fighter_data[:weight_class]
-    ranking = fighter_data[:ranking]
-
-    @record = fighter_data[:record]
-    self.add_ranking(ranking)
-    self.add_weightclass(weightclass)
+  def weightclass
+    self.rank.map {|element| element.weightclass}
   end 
   
 
-  def self.create(name)
-    new(name).tap {|fighter| fighter.save}
+  def self.valid_fighter?(name)
+    invalid_array = ["Ineligible for Rankings\n* Suspension\n* Inactivity>15 months\n* Moving Divisions\n* Yet to debut"]
+
+    name != '' && !invalid_array.include?(name)
   end
-  
+ 
 
 end

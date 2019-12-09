@@ -13,6 +13,10 @@ module Findable
 
   def find_by_include(input)
     all.find_all {|a| a.name.downcase.include?(input.downcase)}
+  end 
+
+  def object_exists?(name)
+    all.any? {|a| a.name == name}
   end
 
 

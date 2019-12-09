@@ -4,12 +4,20 @@
 #All rights reserved.
 
 require 'pry'
+require 'Nokogiri'
+
 require_relative '../lib/concerns/findable.rb'
+require_relative '../lib/concerns/tools.rb'
 require_relative '../lib/scraper.rb'
 require_relative '../lib/fighter.rb'
-require_relative '../lib/weight-class.rb'
+require_relative '../lib/weight_class.rb'
+require_relative '../lib/cli.rb'
+require_relative '../lib/rank.rb'
 
-scraper = Scraper.create
+scraper = Scraper.new
 scraper.start
-WeightClass.add_from_fighters
+
+cli = Cli.new
+cli.main_menu
+
 binding.pry
