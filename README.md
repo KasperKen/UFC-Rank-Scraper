@@ -5,6 +5,7 @@ Downloads a list of fighters from http://rankingmma.com/ and associates them wit
 # usage
 
 1. Run Bundle Install to install dependancies
+2. Run " ruby ./config/environment.rb "
 2. Type in commands to list fighters, weightclasses, and more information like ranking and bios.
 
 # BSD 3-Clause License
