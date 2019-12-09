@@ -7,7 +7,6 @@ Downloads a list of fighters from http://rankingmma.com/ and associates them wit
 1. Run Bundle Install to install dependancies
 2. Type in commands to list fighters, weightclasses, and more information like ranking and bios.
 
-License
 #BSD 3-Clause License
 
 Copyright (c) 2019, Kenneth Andrews
