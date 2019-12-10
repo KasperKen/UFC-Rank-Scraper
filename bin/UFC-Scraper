@@ -1,0 +1,40 @@
+#!/usr/bin/ruby -w
+
+#BSD 3-Clause License
+
+#Copyright (c) 2019, Kenneth Andrews
+#All rights reserved.
+
+
+require_relative '../config/environment'
+
+def url_list 
+  url = ("http://rankingmma.com/ufc-rankings")
+
+  [
+    ("#{url}/heavyweight"),
+    ("#{url}/light-heavyweight"),
+    ("#{url}/featherweight"),
+    ("#{url}/lightweight"),
+    ("#{url}/flyweight"),
+    ("#{url}/middleweight"),
+    ("#{url}/welterweight"),
+    ("#{url}/bantamweight"),
+    ("#{url}/womens-bantamweight"),
+    ("#{url}/womens-flyweight"),
+    ("#{url}/womens-strawweight")
+  ]
+end
+
+scraper = Scraper.new
+
+def start_scrape(scraper)
+  url_list.each {|url| scraper.scrape(url)}
+end
+
+start_scrape(scraper)
+
+cli = Cli.new
+cli.main_menu
+
+binding.pry
