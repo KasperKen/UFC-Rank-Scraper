@@ -36,8 +36,8 @@ class WeightClass
   end
 
 
-  def list_fighters
-    ranks.select {|rank| rank.fighter}
+  def fighters
+    ranks.map {|rank| rank.fighter}
   end
 
   
