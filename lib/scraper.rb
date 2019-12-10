@@ -2,9 +2,6 @@
 #Copyright (c) 2019, Kenneth Andrews All rights reserved.
 #All rights reserved.
 
-require 'nokogiri'
-require 'open-uri'
-
 class Scraper
 
   @@all = []
@@ -22,31 +19,6 @@ class Scraper
 
   def self.all
     @@all
-  end
-
-
-  def url_list 
-    url = ("http://rankingmma.com/ufc-rankings")
-
-    [
-      ("#{url}/heavyweight"),
-      ("#{url}/light-heavyweight"),
-      ("#{url}/middleweight"),
-      ("#{url}/featherweight"),
-      ("#{url}/lightweight"),
-      ("#{url}/flyweight"),
-      ("#{url}/middleweight"),
-      ("#{url}/welterweight"),
-      ("#{url}/bantamweight"),
-      ("#{url}/womens-bantamweight"),
-      ("#{url}/womens-flyweight"),
-      ("#{url}/womens-strawweight")
-    ]
-  end
-
-
-  def start
-    url_list.each {|url| scrape(url)}
   end
 
 
