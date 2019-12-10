@@ -4,19 +4,8 @@
 
 class Cli
 
-  extend Findable
   include Tools
   
-
-  def fighters
-    Fighter.all 
-  end
-
-
-  def weightclasses
-    Weightclass.all
-  end
-
 
   #-------------------------------CLI PRINTING------------------------------
   
@@ -51,7 +40,7 @@ class Cli
 
   def print_no_fighter
     system('clear')
-    print_fighter_commands
+    self.print_fighter_commands
     puts "Could not Find Fighter"
     puts "----------------------"
     puts "\n"
@@ -61,7 +50,7 @@ class Cli
   def print_fighter(fighter) 
     system('clear')
    
-    print_fighter_commands
+    self.print_fighter_commands
     puts "\n"
     puts "| [1] - List Full Bio  | [back] - back to search |"
     puts "\n"
@@ -70,7 +59,7 @@ class Cli
     puts fighter.display_ranks
     puts "\n"
     puts "--------------------------------"
-    puts"\n"
+    puts fighter.bio_summery
   end
 
   
@@ -97,27 +86,27 @@ class Cli
 
     until input == 'exit' || input == 'quit'
     system('clear')
-      print_main_commands
-      input = gets.strip.downcase
+    self.print_main_commands
+      input = gets.strip
 
       case input
       when 'fighters'
-        fighter_menu
+        self.fighter_menu
       end
     end
-    quit_program
+    self.quit_program
   end
   
 
   def fighter_menu
     system('clear')
     input = nil
-    print_fighter_commands
+    self.print_fighter_commands
 
     until input == 'back'
       input = gets.strip
 
-      get_fighter(input) unless input == 'back' 
+      self.get_fighter(input) unless input == 'back' 
     end
   end
 
@@ -129,7 +118,7 @@ class Cli
        case input
        when '1'
          system('clear')
-         print_fighter(fighter)
+         self.print_fighter(fighter)
          puts fighter.full_bio
        end
     end
@@ -139,13 +128,12 @@ class Cli
   def get_fighter(input)
     fighters = Fighter.find_by_include(input)
     if fighters.count == 0
-      print_no_fighter
+      self.print_no_fighter
     elsif fighters.count == 1
-     print_fighter(fighters[0])
-     puts fighters[0].bio_summery
-     print_full_bio?(fighters[0])
+      self.print_fighter(fighters[0])
+      self.print_full_bio?(fighters[0])
     else
-     print_all(fighters)
+      self.print_all(fighters)
     end
   end
   
