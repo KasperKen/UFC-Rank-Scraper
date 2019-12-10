@@ -5,19 +5,12 @@
 
 require 'pry'
 require 'Nokogiri'
+require 'open-uri'
 
-require_relative '../lib/concerns/findable.rb'
-require_relative '../lib/concerns/tools.rb'
-require_relative '../lib/scraper.rb'
-require_relative '../lib/fighter.rb'
-require_relative '../lib/weight_class.rb'
-require_relative '../lib/cli.rb'
-require_relative '../lib/rank.rb'
-
-scraper = Scraper.new
-scraper.start
-
-cli = Cli.new
-cli.main_menu
-
-binding.pry
+require_relative '../lib/concerns/findable'
+require_relative '../lib/concerns/tools'
+require_relative '../lib/scraper'
+require_relative '../lib/fighter'
+require_relative '../lib/weight_class'
+require_relative '../lib/cli'
+require_relative '../lib/rank'
