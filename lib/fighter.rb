@@ -11,7 +11,8 @@ class Fighter
 
 
   attr_accessor :record, :bio_link
-  attr_reader :name, :weightclass
+  attr_reader :name
+
 
   def initialize(name, record, bio_link)
     @name = name
@@ -35,22 +36,45 @@ class Fighter
     Rank.all.select {|rank| rank.fighter.name == self.name}
   end
 
+
   def display_ranks
     rank.map {|object| ("ranked #{object.rank} in the #{object.weightclass.name} division")}
   end
 
+
   def bio_scrape
-    Scraper.all[0].get_page(@bio_link) 
+    @bio_link.include?('rankingmma.com') ? Scraper.all[0].get_page(@bio_link) : nil
   end
 
 
+  def page_valid?
+    self.bio_scrape.at_css('div .content') if bio_scrape
+  end
+
+
+  def bio_valid?
+    self.bio_scrape.css('div .content').at_css('p') if page_valid?
+  end
+
+
+
+
+
   def bio_summery
-   "\n" + self.bio_scrape.css('div .content').css('p')[0].text 
+    if bio_valid? 
+      self.bio_scrape.css('div .content').css('p')[0].text
+    else
+      'No Fighter Summery'
+    end
   end
 
 
   def full_bio
-    self.bio_scrape.css('div .content').text.gsub(/\n/, "\n\n").gsub('(adsbygoogle = window.adsbygoogle || []).push({});', "")
+    if bio_valid?
+      self.bio_scrape.css('div .content').text.strip.gsub(/\n/, "\n\n").gsub('(adsbygoogle = window.adsbygoogle || []).push({});', "")
+    else
+      "No fighter bio"
+    end
   end
 
 
