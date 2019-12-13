@@ -8,7 +8,7 @@ class WeightClass
 
   @@all = []
 
-  attr_reader :name, :rankings
+  attr_reader :name
 
   def initialize(name)
     @name = name
@@ -37,9 +37,13 @@ class WeightClass
 
 
   def fighters
-    ranks.map {|rank| rank.fighter}
+    self.ranks.map {|rank| rank.fighter}
   end
 
+  
+  def find_fighter_by_weight(input)
+    self.fighters.find_all {|fighter| fighter.name.downcase.include?(input.downcase)}
+  end
   
 
 
