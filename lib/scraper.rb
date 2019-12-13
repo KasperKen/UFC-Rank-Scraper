@@ -22,6 +22,30 @@ class Scraper
   end
 
 
+def url_list 
+  url = ("http://rankingmma.com/ufc-rankings")
+
+  [
+    ("#{url}/heavyweight"),
+    ("#{url}/light-heavyweight"),
+    ("#{url}/featherweight"),
+    ("#{url}/lightweight"),
+    ("#{url}/flyweight"),
+    ("#{url}/middleweight"),
+    ("#{url}/welterweight"),
+    ("#{url}/bantamweight"),
+    ("#{url}/womens-bantamweight"),
+    ("#{url}/womens-flyweight"),
+    ("#{url}/womens-strawweight")
+  ]
+end
+
+
+def start_scrape
+  url_list.each {|url| self.scrape(url)}
+end
+
+
   def get_page(url)
     Nokogiri::HTML(open(url))
   end
@@ -35,17 +59,18 @@ class Scraper
     weight = WeightClass.new(weightclass)
 
     row.each do |data|
-      self.abstract_data(doc, data, weight)
+      self.extract_data(doc, data, weight)
     end
   end
 
 
   def format_name(name)
-    name = name.text.gsub('UFC ', '').gsub(' Rankings', '').strip
+    new_name = name.text.gsub('UFC ', '').gsub(' Rankings', '').gsub("’", "").strip #<<<<Needs Replaced with Regex
+    new_name.include?('Womens') ? new_name : "Mens #{new_name}"#<<<<<<<<<<<Adds men to title if not womens division. Needs Regex
   end
 
 
-  def abstract_data(doc, data, weight)
+  def extract_data(doc, data, weight)
     fighter_name = data.children[4].text.gsub('8-5 (2-4 UFC)', '').strip
     bio_link = data.css('a')[0]['href'] if data.css('a')[0]
     ranking = data.children[1].text
