@@ -5,8 +5,12 @@ Downloads a list of fighters from http://rankingmma.com/ and associates them wit
 ## No longer maintained
 This project was created as a learning experience and is no longer maintained. I doubt it will still properly scrape anything at this point.
 
-## usage
+## Usage
 
-1. Run Bundle Install to install dependancies
-2. Run ./bin/UFC-Scraper
-2. Type in commands to list fighters, weightclasses, and more information like ranking and bios.
+1. Run `bundle Install` from the program folder to install dependancies
+2. Start the program with `ruby ./bin/UFC-Scraper`
+3. Type in commands to list fighters, weightclasses, and more information like ranking and bios.
+
+## Video Demo
+
+https://www.youtube.com/watch?v=H_CcfbHxwec&t=235s
