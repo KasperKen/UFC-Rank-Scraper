@@ -3,8 +3,7 @@
 Downloads a list of fighters from http://rankingmma.com/ and associates them with their weight class.
 
 ## No longer maintained
-This project was created as a learning experience and is no longer maintained. I doubt it will still properly scrape anything at this point.
-
+This project was created as a learning experience and is no longer maintained. It may or may not scrape anything from the website at this point.
 ## Usage
 
 1. Run `bundle Install` from the program folder to install dependancies
