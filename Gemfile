@@ -5,7 +5,7 @@
 
 source "https://rubygems.org"
 
-gem 'nokogiri', '~> 1.12'
+gem 'nokogiri', '~> 1.14'
 
 group :development do
   gem 'pry'
